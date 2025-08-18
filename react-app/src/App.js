@@ -13,32 +13,36 @@ function App() {
     setResult(`Tithi from ${startDate} to ${endDate} at ${location}`);
   };
 
-  const handleGoogleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      // Navigate to Google search in the same tab/page 
-      window.location.href = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
-    }
+  const handleGoogleSearch = () => {
+    
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Tithi Calculator</h2>
+        
         
         {/* Google Search Section */}
         <div style={{ marginBottom: '30px', padding: '20px' }}>
-          <form onSubmit={handleGoogleSearch} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'top' }}>
             <input
               type="text"
               placeholder="Search on Google..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault(); // Prevent form submission
+                  // Do nothing - only search when button is clicked
+                }
+              }}
               style={{ padding: '8px', minWidth: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
-              required
             />
+
+        
             <button
-              type="submit"
+              type="button"
+              onClick={handleGoogleSearch}
               style={{
                 padding: '8px 16px',
                 backgroundColor: '#4285f4',
@@ -50,7 +54,7 @@ function App() {
             >
               Search
             </button>
-          </form>
+          </div>
         </div>
 
         {/* Tithi Calculator Section */}
@@ -90,10 +94,10 @@ function App() {
             </div>
 
             <button type="submit">Submit</button>
+            {result && <p>{result}</p>} 
           </form>
 
-          {result && <p>{result}</p>}
-        </div> {/* Close Tithi Calculator Section */}
+        </div>
       </header>
     </div>
   );

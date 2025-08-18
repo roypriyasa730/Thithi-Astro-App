@@ -7,7 +7,7 @@
 }
 
 .App-header {
-  background: #fff;
+  background: #ffffff;
   padding: 20px 40px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -31,11 +31,11 @@ input {
   width: 100%;
   padding: 8px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
 }
 
 button {
-  background: orange;
+  background: rgb(8, 0, 255);
   color: black;
   border: none;
   padding: 10px 15px;
@@ -45,6 +45,4 @@ button {
   font-weight: bold;
 }
 
-button:hover {
-  background: darkorange;
-}
+
