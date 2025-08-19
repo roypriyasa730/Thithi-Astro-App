@@ -25,7 +25,7 @@ function App() {
         {/* Google Search Section */}
         <div style={{ marginBottom: '30px', padding: '20px' }}>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'top' }}>
-            <input
+            <input //google search input
               type="text"
               placeholder="Search on Google..."
               value={searchQuery}
