@@ -2,103 +2,81 @@ import './App.css';
 import React, { useState } from 'react';
 
 function App() {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [location, setLocation] = useState('');
-  const [result, setResult] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [thithi, setThithi] = useState("");
+  const [occasions, setOccasions] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setResult(`Tithi from ${startDate} to ${endDate} at ${location}`);
-  };
+  const handleCalculate = () => {
+    if (!date || !location) {
+      alert("Please select date and enter location!");
+      return;
+    }
 
-  const handleGoogleSearch = () => {
-    
+    const mockThithiList = [
+      "Pratipada", "Dvitiya", "Tritiya", "Chaturthi",
+      "Panchami", "Shashthi", "Saptami", "Ashtami",
+      "Navami", "Dashami", "Ekadashi", "Dvadashi",
+      "Trayodashi", "Chaturdashi", "Purnima/Amavasya"
+    ];
+
+    const randomThithi =
+      mockThithiList[Math.floor(Math.random() * mockThithiList.length)];
+
+    setThithi(randomThithi);
+
+    if (randomThithi === "Chaturthi") {
+      setOccasions(["Ganesh Chaturthi"]);
+    } else if (randomThithi === "Ekadashi") {
+      setOccasions(["Ekadashi Vrat"]);
+    } else {
+      setOccasions([]);
+    }
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        
-        
-        {/* Google Search Section */}
-        <div style={{ marginBottom: '30px', padding: '20px' }}>
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'top' }}>
-            <input //google search input
-              type="text"
-              placeholder="Search on Google..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault(); // Prevent form submission
-                  // Do nothing - only search when button is clicked
-                }
-              }}
-              style={{ padding: '8px', minWidth: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
-            />
+    <div className="app-container">
+      <h1 className="title">Thithi Finder</h1>
 
-        
-            <button
-              type="button"
-              onClick={handleGoogleSearch}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: '#4285f4',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Search
-            </button>
-          </div>
+      <div className="input-group">
+        <label>Select Date: </label>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </div>
+
+      <div className="input-group">
+        <label>Enter Location: </label>
+        <input
+          type="text"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="City or coordinates"
+        />
+      </div>
+
+      <button onClick={handleCalculate} className="btn">
+        Get Thithi
+      </button>
+
+      {thithi && (
+        <div className="result">
+          <h2> Thithi: {thithi}</h2>
+
+          {occasions.length > 0 && (
+            <div>
+              <h3>✨ Auspicious Occasions:</h3>
+              <ul>
+                {occasions.map((item, index) => (
+                  <li key={index}> {item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-
-        {/* Tithi Calculator Section */}
-        <div style={{ padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-          <h3>Calculate Tithi</h3>
-          <form onSubmit={handleSubmit}>
-
-            <div>
-              <label>Start Date: </label>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-              />
-            </div>
-
-            <div>
-              <label>End Date: </label>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Location: </label>
-              <input
-                type="text"
-                placeholder="Enter location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </div>
-
-            <button type="submit">Submit</button>
-            {result && <p>{result}</p>} 
-          </form>
-
-        </div>
-      </header>
+      )}
     </div>
   );
 }
