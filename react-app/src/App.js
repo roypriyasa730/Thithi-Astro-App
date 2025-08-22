@@ -6,26 +6,26 @@ function App() {
   const [location, setLocation] = useState("");
   const [thithi, setThithi] = useState("");
   const [occasions, setOccasions] = useState([]);
+  
+  // Function to handle Tithi calculation
 
   const handleCalculate = () => {
     if (!date || !location) {
       alert("Please select date and enter location!");
       return;
-    }
 
-    const mockThithiList = [
-      "Pratipada", "Dvitiya", "Tritiya", "Chaturthi",
-      "Panchami", "Shashthi", "Saptami", "Ashtami",
-      "Navami", "Dashami", "Ekadashi", "Dvadashi",
-      "Trayodashi", "Chaturdashi", "Purnima/Amavasya"
+      const mockThithiList = [
+        "Pratipada",
+      "Dvitiya",
+      "Tritiya",
+      "Chaturthi",
     ];
-
-    const randomThithi =
+    
+      const randomThithi =
       mockThithiList[Math.floor(Math.random() * mockThithiList.length)];
 
     setThithi(randomThithi);
-
-    if (randomThithi === "Chaturthi") {
+if (randomThithi === "Chaturthi") {
       setOccasions(["Ganesh Chaturthi"]);
     } else if (randomThithi === "Ekadashi") {
       setOccasions(["Ekadashi Vrat"]);
@@ -34,43 +34,55 @@ function App() {
     }
   };
 
-  return (
-    <div className="app-container">
-      <h1 className="title">Thithi Finder</h1>
+return (
+    <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
+      <h1>🪔 Thithi Finder</h1>
 
-      <div className="input-group">
+      <div style={{ margin: "20px" }}>
         <label>Select Date: </label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          style={{ marginLeft: "10px", padding: "5px" }}
         />
       </div>
 
-      <div className="input-group">
+      <div style={{ margin: "20px" }}>
         <label>Enter Location: </label>
         <input
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           placeholder="City or coordinates"
+          style={{ marginLeft: "10px", padding: "5px" }}
         />
       </div>
 
-      <button onClick={handleCalculate} className="btn">
+      <button
+        onClick={handleCalculate}
+        style={{
+          padding: "10px 20px",
+          background: "#6a0dad",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+        }}
+      >
         Get Thithi
       </button>
 
       {thithi && (
-        <div className="result">
-          <h2> Thithi: {thithi}</h2>
+        <div style={{ marginTop: "30px" }}>
+          <h2>📅 Thithi: {thithi}</h2>
 
           {occasions.length > 0 && (
             <div>
               <h3>✨ Auspicious Occasions:</h3>
-              <ul>
+              <ul style={{ listStyle: "none", padding: 0 }}>
                 {occasions.map((item, index) => (
-                  <li key={index}> {item}</li>
+                  <li key={index}>✅ {item}</li>
                 ))}
               </ul>
             </div>
@@ -80,5 +92,7 @@ function App() {
     </div>
   );
 }
+}
 
+// Export the App component
 export default App;
