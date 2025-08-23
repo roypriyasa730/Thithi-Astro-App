@@ -1,11 +1,14 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [thithi, setThithi] = useState("");
   const [occasions, setOccasions] = useState([]);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [locationError, setLocationError] = useState("");
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   
   // Function to handle Tithi calculation
 
@@ -13,19 +16,32 @@ function App() {
     if (!date || !location) {
       alert("Please select date and enter location!");
       return;
+    }
 
-      const mockThithiList = [
-        "Pratipada",
-      "Dvitiya",
+    const mockThithiList = [
+      "Pratipada",
+      "Dwitiya",
       "Tritiya",
       "Chaturthi",
+      "Panchami",
+      "Shashthi",
+      "Saptami",
+      "Ashtami",
+      "Navami",
+      "Dashami",
+      "Ekadashi",
+      "Dwadashi",
+      "Trayodashi",
+      "Chaturdashi",
+      "Purnima"
     ];
     
-      const randomThithi =
+    const randomThithi =
       mockThithiList[Math.floor(Math.random() * mockThithiList.length)];
 
     setThithi(randomThithi);
-if (randomThithi === "Chaturthi") {
+    
+    if (randomThithi === "Chaturthi") {
       setOccasions(["Ganesh Chaturthi"]);
     } else if (randomThithi === "Ekadashi") {
       setOccasions(["Ekadashi Vrat"]);
@@ -36,7 +52,7 @@ if (randomThithi === "Chaturthi") {
 
 return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
-      <h1>🪔 Thithi Finder</h1>
+      <h1> Thithi Finder</h1>
 
       <div style={{ margin: "20px" }}>
         <label>Select Date: </label>
@@ -75,14 +91,14 @@ return (
 
       {thithi && (
         <div style={{ marginTop: "30px" }}>
-          <h2>📅 Thithi: {thithi}</h2>
+          <h2> Thithi: {thithi}</h2>
 
           {occasions.length > 0 && (
             <div>
               <h3>✨ Auspicious Occasions:</h3>
               <ul style={{ listStyle: "none", padding: 0 }}>
                 {occasions.map((item, index) => (
-                  <li key={index}>✅ {item}</li>
+                  <li key={index}> {item}</li>
                 ))}
               </ul>
             </div>
@@ -91,7 +107,6 @@ return (
       )}
     </div>
   );
-}
 }
 
 // Export the App component
