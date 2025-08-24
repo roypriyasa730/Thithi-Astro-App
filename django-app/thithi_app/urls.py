@@ -20,6 +20,5 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/location/', views.get_location_details, name='get_location_details'),
     path('api/tithi/', views.calculate_tithi, name='calculate_tithi'),
 ]

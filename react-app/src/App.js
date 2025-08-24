@@ -9,48 +9,39 @@ function App() {
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
   const [locationError, setLocationError] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
-  
-  // Function to handle Tithi calculation
 
+  // Function to handle Tithi calculation
   const handleCalculate = () => {
     if (!date || !location) {
       alert("Please select date and enter location!");
       return;
     }
 
-    const mockThithiList = [
-      "Pratipada",
-      "Dwitiya",
-      "Tritiya",
-      "Chaturthi",
-      "Panchami",
-      "Shashthi",
-      "Saptami",
-      "Ashtami",
-      "Navami",
-      "Dashami",
-      "Ekadashi",
-      "Dwadashi",
-      "Trayodashi",
-      "Chaturdashi",
-      "Purnima"
-    ];
-    
-    const randomThithi =
-      mockThithiList[Math.floor(Math.random() * mockThithiList.length)];
-
-    setThithi(randomThithi);
-    
-    if (randomThithi === "Chaturthi") {
-      setOccasions(["Ganesh Chaturthi"]);
-    } else if (randomThithi === "Ekadashi") {
-      setOccasions(["Ekadashi Vrat"]);
-    } else {
-      setOccasions([]);
-    }
+    // Call the Django API to calculate Tithi
+    fetch("http://localhost:8000/api/tithi/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        date: date,
+        location: location,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setThithi(data.tithi);
+        } else {
+          alert("Error calculating Tithi");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
-return (
+  return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
       <h1> Thithi Finder</h1>
 
