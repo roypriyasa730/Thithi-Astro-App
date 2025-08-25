@@ -41,6 +41,14 @@ function App() {
       });
   };
 
+   const handleReset = () => {
+    setDate("");
+    setLocation("");
+    setThithi("");
+    setOccasions([]);
+  };
+
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
       <h1> Thithi Finder</h1>
@@ -80,13 +88,28 @@ function App() {
         Get Thithi
       </button>
 
+      <button
+        onClick={handleReset}
+        style={{
+          padding: "10px 20px",
+          background: "#6a0dad",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+          marginLeft: "10px",
+        }}
+      >
+        Reset
+      </button>
+
       {thithi && (
         <div style={{ marginTop: "30px" }}>
           <h2> Thithi: {thithi}</h2>
 
           {occasions.length > 0 && (
             <div>
-              <h3>✨ Auspicious Occasions:</h3>
+              <h3>Auspicious Occasions:</h3>
               <ul style={{ listStyle: "none", padding: 0 }}>
                 {occasions.map((item, index) => (
                   <li key={index}> {item}</li>
