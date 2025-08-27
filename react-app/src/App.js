@@ -1,14 +1,11 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function App() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [thithi, setThithi] = useState("");
   const [occasions, setOccasions] = useState([]);
-  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const [locationError, setLocationError] = useState("");
-  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
 
   // Function to handle Tithi calculation
   const handleCalculate = () => {
