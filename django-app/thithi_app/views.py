@@ -6,12 +6,9 @@ from django.views.decorators.http import require_http_methods
 @require_http_methods(["POST"])
 def calculate_tithi(request):
     try:
-        data = request.POST
-        date = data.get('date', 'unknown date')
-        location = data.get('location', 'unknown location')
         return JsonResponse({
             'success': True,
-            "tithi": f"Mock Tithi for {date} at {location}"
+            'tithi': "Tithi calculation not implemented yet"
         })
         
     except Exception as e:
