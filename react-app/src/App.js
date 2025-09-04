@@ -14,6 +14,12 @@ function App() {
       return;
     }
 
+    const handleCalculate = () => {
+    if (!date || !coordinates) {
+      alert("Please select date and get location coordinates!");
+      return;
+    }
+
     // Call the Django API to calculate Tithi
     fetch("http://localhost:8000/api/tithi/", {
       method: "POST",
