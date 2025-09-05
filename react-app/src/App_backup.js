@@ -1,17 +1,11 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function App() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [thithi, setThithi] = useState("");
   const [occasions, setOccasions] = useState([]);
-
-  // Set today's date as default
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setDate(today);
-  }, []);
 
   // Function to handle Tithi calculation
   const handleCalculate = () => {
@@ -20,8 +14,14 @@ function App() {
       return;
     }
 
+    const handleCalculate = () => {
+    if (!date || !coordinates) {
+      alert("Please select date and get location coordinates!");
+      return;
+    }
+
     // Call the Django API to calculate Tithi
-    fetch("http://127.0.0.1:8000/api/tithi/", {
+    fetch("http://localhost:8000/api/tithi/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,27 +35,26 @@ function App() {
       .then((data) => {
         if (data.success) {
           setThithi(data.tithi);
-          setOccasions([]); // You can set occasions based on tithi if needed
         } else {
-          alert("Error calculating Tithi: " + (data.error || "Unknown error"));
+          alert("Error calculating Tithi");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Failed to connect to server");
       });
   };
 
-  const handleReset = () => {
+   const handleReset = () => {
     setDate("");
     setLocation("");
     setThithi("");
     setOccasions([]);
   };
 
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
-      <h1>🌙 Thithi Finder</h1>
+      <h1> Thithi Finder</h1>
 
       <div style={{ margin: "20px" }}>
         <label>Select Date: </label>
@@ -87,7 +86,6 @@ function App() {
           border: "none",
           borderRadius: "8px",
           cursor: "pointer",
-          marginRight: "10px"
         }}
       >
         Get Thithi
@@ -97,33 +95,27 @@ function App() {
         onClick={handleReset}
         style={{
           padding: "10px 20px",
-          background: "#ff6b6b",
+          background: "#6a0dad",
           color: "white",
           border: "none",
           borderRadius: "8px",
           cursor: "pointer",
+          marginLeft: "10px",
         }}
       >
         Reset
       </button>
 
       {thithi && (
-        <div style={{ 
-          marginTop: "30px", 
-          padding: "20px", 
-          backgroundColor: "#f9f9f9", 
-          borderRadius: "10px", 
-          maxWidth: "500px", 
-          margin: "30px auto" 
-        }}>
-          <h2 style={{ color: "#6a0dad" }}>🌙 Thithi: {thithi}</h2>
+        <div style={{ marginTop: "30px" }}>
+          <h2> Thithi: {thithi}</h2>
 
           {occasions.length > 0 && (
             <div>
-              <h3 style={{ color: "#4CAF50" }}>✨ Auspicious Occasions:</h3>
+              <h3>Auspicious Occasions:</h3>
               <ul style={{ listStyle: "none", padding: 0 }}>
                 {occasions.map((item, index) => (
-                  <li key={index} style={{ margin: "5px 0" }}>🎉 {item}</li>
+                  <li key={index}> {item}</li>
                 ))}
               </ul>
             </div>
@@ -134,4 +126,5 @@ function App() {
   );
 }
 
+// Export the App component
 export default App;
