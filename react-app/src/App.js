@@ -13,6 +13,22 @@ function App() {
     setDate(today);
   }, []);
 
+  const getCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+      },
+      (error) => {
+        alert("Failed to get location: " + error.message);
+      }
+    );
+  };
+
   // Function to handle Tithi calculation
   const handleCalculate = () => {
     if (!date || !location) {
@@ -55,7 +71,7 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px", fontFamily: "Arial" }}>
-      <h1>🌙 Thithi Finder</h1>
+      <h1> Thithi Finder</h1>
 
       <div style={{ margin: "20px" }}>
         <label>Select Date: </label>
