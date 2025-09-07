@@ -2,16 +2,18 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
   const [thithi, setThithi] = useState("");
   const [occasions, setOccasions] = useState([]);
 
-  // Set today's date as default
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setDate(today);
-  }, []);
+  // State for user inputs
+  const userInputs = {
+      start_date: startDate,
+      end_date: endDate,
+      location: location
+  };
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
