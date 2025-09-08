@@ -31,10 +31,10 @@ function App() {
     );
   };
 
-  // Function to handle Tithi calculation
+  // Function to call Django API
   const handleCalculate = () => {
-    if (!date || !location) {
-      alert("Please select date and enter location!");
+    if (!startDate || !location) {
+      alert("Please select start date and enter location!");
       return;
     }
 
@@ -45,8 +45,8 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        date: date,
-        location: location,
+        date: startDate,
+        location: location
       }),
     })
       .then((response) => response.json())
@@ -65,7 +65,8 @@ function App() {
   };
 
   const handleReset = () => {
-    setDate("");
+    setStartDate("");
+    setEndDate("");
     setLocation("");
     setThithi("");
     setOccasions([]);
@@ -76,11 +77,21 @@ function App() {
       <h1> Thithi Finder</h1>
 
       <div style={{ margin: "20px" }}>
-        <label>Select Date: </label>
+        <label>Start Date: </label>
         <input
           type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          style={{ marginLeft: "10px", padding: "5px" }}
+        />
+      </div>
+
+      <div style={{ margin: "20px" }}>
+        <label>End Date: </label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
           style={{ marginLeft: "10px", padding: "5px" }}
         />
       </div>
@@ -95,6 +106,21 @@ function App() {
           style={{ marginLeft: "10px", padding: "5px" }}
         />
       </div>
+
+  <button
+          onClick={getCurrentLocation}
+          style={{
+            marginLeft: "10px",
+            padding: "5px 10px",
+            background: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer"
+          }}
+        >
+          Use My Location
+        </button>
 
       <button
         onClick={handleCalculate}
@@ -134,14 +160,14 @@ function App() {
           maxWidth: "500px", 
           margin: "30px auto" 
         }}>
-          <h2 style={{ color: "#6a0dad" }}>🌙 Thithi: {thithi}</h2>
+          <h2 style={{ color: "#6a0dad" }}>Thithi: {thithi}</h2>
 
           {occasions.length > 0 && (
             <div>
-              <h3 style={{ color: "#4CAF50" }}>✨ Auspicious Occasions:</h3>
+              <h3 style={{ color: "#4CAF50" }}> Auspicious Occasions:</h3>
               <ul style={{ listStyle: "none", padding: 0 }}>
                 {occasions.map((item, index) => (
-                  <li key={index} style={{ margin: "5px 0" }}>🎉 {item}</li>
+                  <li key={index} style={{ margin: "5px 0" }}>{item}</li>
                 ))}
               </ul>
             </div>
