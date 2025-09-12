@@ -5,6 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from prokerala_api import ApiClient
 
+API_KEY = "0e73d00b-375b-4d1f-a51f-8220b3a50339"
+API_Secret ="NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
+client = ApiClient(API_KEY, API_Secret)
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def calculate_tithi(request):
