@@ -24,6 +24,15 @@ def calculate_tithi(request):
                 'error': 'Missing date or location in request'
             }, status=400)
         
+        lat, lon = location.split(",")
+
+        #CALL PROKERALA API
+        response = client.call(
+            "hindu_calendar/tithi",
+            {"date": date,
+}
+        )
+        
         return JsonResponse({
             'success': True,
             'tithi': "Tithi calculation not implemented yet"
