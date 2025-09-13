@@ -27,12 +27,12 @@ def calculate_tithi(request):
         lat, lon = location.split(",")
 
         #CALL PROKERALA API
-         response = client.call(
-             "hindu_calendar/tithi",
-             {"date": date,
-              "latitude": lat,
-              "longitude": lon,}
-         )
+        response = client.call(
+            "hindu_calendar/tithi",
+            {"date": date,
+             "latitude": lat,
+             "longitude": lon,}
+        )
         
         return JsonResponse({
             'success': True,
