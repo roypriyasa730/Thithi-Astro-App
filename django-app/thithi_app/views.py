@@ -3,6 +3,8 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from prokerala_api.services.astrology import HinduTithi
+
 from prokerala_api import ApiClient
 
 API_KEY = "0e73d00b-375b-4d1f-a51f-8220b3a50339"
@@ -23,20 +25,23 @@ def calculate_tithi(request):
                 'success': False,
                 'error': 'Missing date or location in request'
             }, status=400)
+    
         
         lat, lon = location.split(",")
 
+        tithi_service = HinduTithi(client)
+        
         #CALL PROKERALA API
-        response = client.call(
-            "hindu_calendar/tithi",
-            {"date": date,
-             "latitude": lat,
-             "longitude": lon,}
+        tithi_service = HinduTithi(
+            date=date,
+            latitude=lat,
+            longitude=lon
         )
+        response = tithi_service.get_results()
         
         return JsonResponse({
             'success': True,
-            'tithi': "Tithi calculation not implemented yet"
+            'tithi': response
         })
         
     except Exception as e:
