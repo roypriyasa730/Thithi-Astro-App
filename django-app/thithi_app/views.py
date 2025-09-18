@@ -29,7 +29,7 @@ def calculate_tithi(request):
         
         lat, lon = location.split(",")
 
-        tithi_service = HinduTithi(client)
+        
         
         #CALL PROKERALA API
         tithi_service = HinduTithi(
