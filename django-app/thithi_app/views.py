@@ -3,25 +3,26 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
-
 from prokerala_api import ApiClient
 
 API_KEY = "0e73d00b-375b-4d1f-a51f-8220b3a50339"
 API_Secret ="NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
 
-
 @csrf_exempt
 @require_http_methods(["POST"])
 def calculate_tithi(request):
-
     try:
-        
+        client = ApiClient(API_KEY, API_Secret)
+        result = client.get('v2/astrology/kundli/advanced', {
+            'ayanamsa': 1,
+            'coordinates': '23.1765,75.7885',
+            'datetime': '2020-01-01T12:31:14+00:00'
+        })
+        print(json.dumps(result, indent=4))
         return JsonResponse({
             'success': True,
-            'tithi': "response from prokerala api"
+            'tithi': result
         })
-        
     except Exception as e:
         return JsonResponse({
             'success': False,

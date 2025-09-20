@@ -187,3 +187,27 @@ Both servers support hot-reload during development:
 ## License
 
 This project is for educational and personal use.
+
+
+
+
+
+
+####################
+# Navigate to your project directory
+cd /Users/priyasaroy/Documents/StoreRoom/Thithi-Astro-App
+
+# Create virtual environment
+python3 -m venv .venv
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install required packages in virtual environment
+pip install Django==4.2.7 django-cors-headers pyephem requests
+
+# Navigate to django-app directory
+cd django-app
+
+# Run Django server
+python manage.py runserver
