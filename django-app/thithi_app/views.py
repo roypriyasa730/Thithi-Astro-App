@@ -1,10 +1,10 @@
 import json
-import requests
+import requests 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from prokerala_api import ApiClient
 
+        
 API_KEY = "0e73d00b-375b-4d1f-a51f-8220b3a50339"
 API_Secret ="NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
 
@@ -12,55 +12,41 @@ API_Secret ="NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
 @require_http_methods(["POST"])
 def calculate_tithi(request):
     try:
-        client = ApiClient(API_KEY, API_Secret)
-        result = client.get('v2/astrology/kundli/advanced', {
-            'ayanamsa': 1,
-            'coordinates': '23.1765,75.7885',
-            'datetime': '2020-01-01T12:31:14+00:00'
-        })
-        print(json.dumps(result, indent=4))
-        return JsonResponse({
-            'success': True,
-            'tithi': result
-        })
+        body = json.loads(request.body.decode("utf-8"))
+        date = body.get("date")
+        lat = body.get("lat")
+        lon = body.get("lon")
+        # For demonstration, we will mock the API response
+        tithi = "Shukla Paksha Tritiya"
+        occasions = ["Akshaya Tritiya"]
+
+        response = {
+            "date": date,
+            "coordinates": {"lat": lat, "lon": lon},
+            "tithi": tithi,
+            "occasions": occasions
+        }
+        return JsonResponse(response)
     except Exception as e:
-        return JsonResponse({
-            'success': False,
-            'error': str(e)
-        }, status=500)
-    
-import requests    
+        return JsonResponse({"success": False, "error": str(e)}, status=500)
+   
+ 
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def get_location_name(request):
+   
     try:
         body = json.loads(request.body.decode("utf-8"))
         lat = body.get("lat")
         lon = body.get("lon")
+        # For demonstration, we will mock the location name
+        location_name = "Sample Location"
 
-        if lat is None or lon is None:
-            return JsonResponse({
-                "success": False,
-                "error": "Latitude and Longitude required"
-            }, status=400)
-
-        # Use OpenStreetMap Nominatim API
-
-        url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
-        response = requests.get(url, headers={"User-Agent": "django-app"})
-        data = response.json()
-
-        place_name = data.get("display_name", "Unknown location")
-
-        return JsonResponse({
-            "success": True,
-            "place": place_name,
-            "lat": lat,
-            "lon": lon
-        })
-
+        response = {
+            "coordinates": {"lat": lat, "lon": lon},
+            "location_name": location_name
+        }
+        return JsonResponse(response)
     except Exception as e:
-        return JsonResponse({
-            "success": False,
-            "error": str(e)
-        }, status=500)
+        return JsonResponse({"success": False, "error": str(e)}, status=500)

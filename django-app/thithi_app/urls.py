@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/tithi/', calculate_tithi, name='calculate_tithi'),
     path('api/location/', get_location_name, name='get_location_name'),
+   
 ]
 
 
