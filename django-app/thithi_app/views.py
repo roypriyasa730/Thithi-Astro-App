@@ -41,7 +41,7 @@ def get_location_name(request):
         lat = body.get("lat")
         lon = body.get("lon")
         # For demonstration, we will mock the location name
-        location_name = "Sample Location"
+        location_name = "Kolkata, India"
 
         response = {
             "coordinates": {"lat": lat, "lon": lon},
