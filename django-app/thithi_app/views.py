@@ -16,9 +16,19 @@ def calculate_tithi(request):
         date = body.get("date")
         lat = body.get("lat")
         lon = body.get("lon")
-        # For demonstration, we will mock the API response
-        tithi = "Shukla Paksha Tritiya"
-        occasions = ["Akshaya Tritiya"]
+        timezone = body.get("timezone")
+
+        # Build the API request
+        url = f"https://api.prokerala.com/astro/panchang?date={date}&lat={lat}&lon={lon}&timezone={timezone}"
+        headers = {
+            "X-Api-Key": "0e73d00b-375b-4d1f-a51f-8220b3a50339",
+            "X-Api-Secret": "NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
+        }
+        api_response = requests.get(url, headers=headers).json()
+
+        # Extract tithi and occasions from api_response (add error handling if needed)
+        tithi = api_response.get("tithi")
+        occasions = api_response.get("occasions")
 
         response = {
             "date": date,
