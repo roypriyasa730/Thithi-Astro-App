@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import calculate_tithi, get_location_name
+from thithi_app.views import calculate_tithi, get_location_name
 
 urlpatterns = [
     path('admin/', admin.site.urls),

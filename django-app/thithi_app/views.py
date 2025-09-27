@@ -19,7 +19,8 @@ def calculate_tithi(request):
         timezone = body.get("timezone")
 
         # Build the API request
-        url = f"https://api.prokerala.com/astro/panchang?date={date}&lat={lat}&lon={lon}&timezone={timezone}"
+        url = f"https://api.prokerala.com/v2/astrology/panchang?ayanamsa=lahiri&latitude={lat}&longitude={lon}&datetime={date}T06:00:00&timezone={timezone}"
+
         headers = {
             "X-Api-Key": "0e73d00b-375b-4d1f-a51f-8220b3a50339",
             "X-Api-Secret": "NXGzpe4RMX0hEmhCsIjLPUVHFnwabO9RXcLF7zXg"
