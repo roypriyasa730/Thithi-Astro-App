@@ -60,3 +60,4 @@ def get_location_name(request):
         return JsonResponse(response)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=500)
+    
