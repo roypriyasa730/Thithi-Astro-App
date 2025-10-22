@@ -27,7 +27,7 @@ def calculate_tithi(request):
         api_response = requests.get(url, headers=headers).json()
 
         # Extract tithi and occasions from api_response (add error handling if needed)
-        tithi = api_response.get("tithi") (ok)
+        tithi = api_response.get("tithi") 
         occasions = api_response.get("occasions")
 
         response = {
